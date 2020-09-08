@@ -35,7 +35,7 @@ pub trait Sandbox: Sized + 'static {
                 WindowEvent::Resized(size) => {
                     let (w, h) = (size.width as u32, size.height as u32);
                     textures = renderer.swap_chain(w, h, PresentMode::default());
-                    *control_flow = ControlFlow::Poll;
+                    *control_flow = ControlFlow::Wait;
                 }
                 WindowEvent::KeyboardInput {
                     input:
@@ -52,7 +52,7 @@ pub trait Sandbox: Sized + 'static {
                 }
                 _ => {}
             },
-            Event::MainEventsCleared => {
+            Event::RedrawRequested(_) => {
                 let output = textures.next();
                 let mut frame = renderer.frame();
 
@@ -69,7 +69,9 @@ pub trait Sandbox: Sized + 'static {
                 }
                 renderer.present(frame);
             }
-            _ => {}
+            _ => {
+                *control_flow = ControlFlow::Wait;
+            }
         });
     }
 }
