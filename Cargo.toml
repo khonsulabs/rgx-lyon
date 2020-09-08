@@ -8,3 +8,6 @@ edition = "2018"
 [dependencies]
 rgx = { version = "0.8", features = ["renderer"] }
 lyon = "0.16"
+
+[dev-dependencies]
+winit = "0.22"

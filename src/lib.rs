@@ -1,3 +1,4 @@
-mod batch;
+mod builder;
 mod pipeline;
-pub use self::{batch::*, pipeline::*};
+mod shape;
+pub use self::{builder::*, pipeline::*, shape::*};

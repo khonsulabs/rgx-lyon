@@ -19,28 +19,11 @@ impl<'a> core::AbstractPipeline<'a> for LyonPipeline {
 
     fn description() -> core::PipelineDescription<'a> {
         core::PipelineDescription {
-            vertex_layout: &[
-                core::VertexFormat::Float3,
-                core::VertexFormat::Float2,
-                core::VertexFormat::UByte4,
-                core::VertexFormat::Float,
-            ],
-            pipeline_layout: &[
-                core::Set(&[core::Binding {
-                    binding: core::BindingType::UniformBuffer,
-                    stage: core::ShaderStage::Vertex,
-                }]),
-                core::Set(&[
-                    core::Binding {
-                        binding: core::BindingType::SampledTexture,
-                        stage: core::ShaderStage::Fragment,
-                    },
-                    core::Binding {
-                        binding: core::BindingType::Sampler,
-                        stage: core::ShaderStage::Fragment,
-                    },
-                ]),
-            ],
+            vertex_layout: &[core::VertexFormat::Float3, core::VertexFormat::UByte4],
+            pipeline_layout: &[rgx::core::Set(&[rgx::core::Binding {
+                binding: rgx::core::BindingType::UniformBuffer,
+                stage: rgx::core::ShaderStage::Vertex,
+            }])],
             vertex_shader: include_bytes!("shaders/shape.vert.spv"),
             fragment_shader: include_bytes!("shaders/shape.frag.spv"),
         }
@@ -72,10 +55,3 @@ impl<'a> core::AbstractPipeline<'a> for LyonPipeline {
         Some((&self.buf, vec![self::Uniforms { transform, ortho }]))
     }
 }
-
-// impl core::Renderable for super::Batch {
-//     fn buffer(&self, r: &core::Renderer) -> core::VertexBuffer {
-//         let buf = self.vertices();
-//         r.device.create_buffer(buf.as_slice())
-//     }
-// }
