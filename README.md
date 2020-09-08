@@ -6,14 +6,13 @@ This crate provides extremely feature-rich vector shape rendering to [rgx](https
 
 ```rust
 let mut builder = ShapeBuilder::default();
-builder
-    .fill_circle(
-        lyon::math::Point::new(50., 50.),
-        25.,
-        &[1., 0., 0., 1.],
-        &FillOptions::default(),
-    )
-    .expect("Error tesselating circle");
+lyon::tessellation::basic_shapes::fill_circle(
+    Point::new(50., 50.),
+    25.,
+    &FillOptions::default(),
+    &mut builder,
+)
+.expect("Error tesselating circle");
 let shape = builder.prepare(&renderer);
 
 // { ... }

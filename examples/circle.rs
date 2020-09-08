@@ -1,4 +1,4 @@
-use lyon::tessellation::{basic_shapes::fill_circle, FillOptions};
+use lyon_tessellation::{basic_shapes::fill_circle, math::Point, FillOptions};
 use rgx::core::{Blending, Pass, Renderer};
 use rgx_lyon::{LyonPipeline, Shape, ShapeBuilder};
 
@@ -22,7 +22,7 @@ impl Sandbox for CircleExample {
         builder.default_color = [1., 0., 0., 1.];
 
         fill_circle(
-            lyon::math::Point::new(50., 50.),
+            Point::new(50., 50.),
             25.,
             &FillOptions::default(),
             &mut builder,

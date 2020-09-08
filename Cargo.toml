@@ -1,6 +1,6 @@
 [package]
 name = "rgx-lyon"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Jonathan Johnson <jon@khonsulabs.com>"]
 edition = "2018"
 description = "A 2d graphics pipeline for rgx utilizing lyon"
@@ -9,10 +9,9 @@ license = "MIT"
 keywords = ["rgx", "lyon", "2d", "graphics"]
 categories = ["graphics"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 rgx = { version = "0.8", features = ["renderer"] }
-lyon = "0.16"
+lyon_tessellation = "0.16"
 
 [dev-dependencies]
 winit = "0.22"

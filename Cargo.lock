@@ -504,26 +504,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "lyon"
-version = "0.16.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e70c7d8016c5c3a488b987ce9b90e5276cd0e4f977218b0ca00484518e06bbe7"
-dependencies = [
- "lyon_algorithms",
- "lyon_tessellation",
-]
-
-[[package]]
-name = "lyon_algorithms"
-version = "0.16.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "11033936a5e9d7bf35b7ba71a19f8b6bc838f3206304175dc5b3524ca16672a8"
-dependencies = [
- "lyon_path",
- "sid",
-]
-
-[[package]]
 name = "lyon_geom"
 version = "0.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -929,9 +909,9 @@ dependencies = [
 
 [[package]]
 name = "rgx-lyon"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
- "lyon",
+ "lyon_tessellation",
  "rgx",
  "winit",
 ]

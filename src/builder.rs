@@ -1,4 +1,8 @@
 use crate::shape::{Shape, Vertex};
+use lyon_tessellation::{
+    basic_shapes, math::Point, path::Path, FillOptions, FillTessellator, GeometryBuilderError,
+    StrokeOptions, StrokeTessellator, TessellationError, VertexId,
+};
 use rgx::{color::Rgba, core::Renderer, kit::ZDepth, math::Vector3};
 
 mod lyon_builders;
@@ -43,12 +47,8 @@ impl ShapeBuilder {
     }
 
     /// Fill an arbitrary path from `lyon::path`
-    pub fn fill(
-        &mut self,
-        path: &lyon::path::Path,
-        options: &lyon::tessellation::FillOptions,
-    ) -> Result<(), lyon::tessellation::TessellationError> {
-        let mut tesselator = lyon::tessellation::FillTessellator::new();
+    pub fn fill(&mut self, path: &Path, options: &FillOptions) -> Result<(), TessellationError> {
+        let mut tesselator = FillTessellator::new();
         let _ = tesselator.tessellate_with_ids(path.id_iter(), path, Some(path), options, self)?;
         Ok(())
     }
@@ -56,10 +56,10 @@ impl ShapeBuilder {
     /// Stroke an arbitrary path from `lyon::path`
     pub fn stroke(
         &mut self,
-        path: &lyon::path::Path,
-        options: &lyon::tessellation::StrokeOptions,
-    ) -> Result<(), lyon::tessellation::TessellationError> {
-        let mut tesselator = lyon::tessellation::StrokeTessellator::new();
+        path: &Path,
+        options: &StrokeOptions,
+    ) -> Result<(), TessellationError> {
+        let mut tesselator = StrokeTessellator::new();
         let _ = tesselator.tessellate_with_ids(path.id_iter(), path, Some(path), options, self)?;
         Ok(())
     }
@@ -67,26 +67,26 @@ impl ShapeBuilder {
     /// Fill a circle using `lyon::tesselation::basic_shapes`
     pub fn fill_circle(
         &mut self,
-        center: lyon::math::Point,
+        center: Point,
         radius: f32,
-        options: &lyon::tessellation::FillOptions,
-    ) -> Result<(), lyon::tessellation::TessellationError> {
-        lyon::tessellation::basic_shapes::fill_circle(center, radius, options, self)?;
+        options: &FillOptions,
+    ) -> Result<(), TessellationError> {
+        basic_shapes::fill_circle(center, radius, options, self)?;
         Ok(())
     }
 
     /// Fill a circle using `lyon::tesselation::basic_shapes`
     pub fn stroke_circle(
         &mut self,
-        center: lyon::math::Point,
+        center: Point,
         radius: f32,
-        options: &lyon::tessellation::StrokeOptions,
-    ) -> Result<(), lyon::tessellation::TessellationError> {
-        lyon::tessellation::basic_shapes::stroke_circle(center, radius, options, self)?;
+        options: &StrokeOptions,
+    ) -> Result<(), TessellationError> {
+        basic_shapes::stroke_circle(center, radius, options, self)?;
         Ok(())
     }
 
-    fn new_vertex(&mut self, point: lyon::math::Point, attributes: &[f32]) -> Vertex {
+    fn new_vertex(&mut self, point: Point, attributes: &[f32]) -> Vertex {
         let attributes = if attributes.is_empty() {
             &self.default_color
         } else {
@@ -109,15 +109,14 @@ impl ShapeBuilder {
 
     fn add_vertex(
         &mut self,
-        point: lyon::math::Point,
+        point: Point,
         attributes: &[f32],
-    ) -> Result<lyon::lyon_tessellation::VertexId, lyon::lyon_tessellation::GeometryBuilderError>
-    {
+    ) -> Result<VertexId, GeometryBuilderError> {
         let vertex = self.new_vertex(point, attributes);
-        let new_id = lyon::tessellation::VertexId(self.vertices.len() as u32);
+        let new_id = VertexId(self.vertices.len() as u32);
         self.vertices.push(vertex);
         if self.vertices.len() > u16::MAX as usize {
-            return Err(lyon::tessellation::GeometryBuilderError::TooManyVertices);
+            return Err(GeometryBuilderError::TooManyVertices);
         }
 
         Ok(new_id)

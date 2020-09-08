@@ -1,8 +1,4 @@
-use lyon::{
-    math::point,
-    path::Path,
-    tessellation::{FillOptions, StrokeOptions},
-};
+use lyon_tessellation::{math::point, path::Path, FillOptions, StrokeOptions};
 use rgx::core::{Blending, Pass, Renderer};
 use rgx_lyon::{LyonPipeline, Shape, ShapeBuilder};
 
