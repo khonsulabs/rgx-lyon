@@ -1,5 +1,6 @@
 use rgx::{core, math::Matrix4};
 
+/// A pipeline for rendering shapes.
 pub struct LyonPipeline {
     pipeline: core::Pipeline,
     bindings: core::BindingGroup,
@@ -8,8 +9,11 @@ pub struct LyonPipeline {
 
 #[repr(C)]
 #[derive(Copy, Clone)]
+/// The uniforms for the shader. These uniforms match those from rgx's built-in pipelines, and the math performed is identical
 pub struct Uniforms {
+    /// The orthographic projection matrix
     pub ortho: Matrix4<f32>,
+    /// The transformation matrix
     pub transform: Matrix4<f32>,
 }
 

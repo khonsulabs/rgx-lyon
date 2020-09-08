@@ -3,6 +3,11 @@ name = "rgx-lyon"
 version = "0.1.0"
 authors = ["Jonathan Johnson <jon@khonsulabs.com>"]
 edition = "2018"
+description = "A 2d graphics pipeline for rgx utilizing lyon"
+readme = "./README.md"
+license = "MIT"
+keywords = ["rgx", "lyon", "2d", "graphics"]
+categories = ["graphics"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
